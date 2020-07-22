@@ -46,30 +46,7 @@ public class PokerHand {
 		return (cards[HAND_SIZE-1].getRank() == Card.A);
 	}
 
-	
 	// Evaluator methods
-	
-	public boolean isFlush() {
-		boolean r = false;
-		
-		if(isRoyalFlush() || isStraightFlush()) {
-			return r;
-		}
-		
-		r = areCardsSameSuit();
-		
-		return r;
-	}
-
-	public boolean isStraight() {
-		return areCardsStraight() && !areCardsSameSuit();
-	}
-
-	public boolean isStraightFlush() {
-		return (areCardsSameSuit() && areCardsStraight() && !isLastCardAnAce());
-		
-	}
-
 	public boolean isRoyalFlush() {
 		boolean r1, r2, r3;
 		r1 = areCardsSameSuit();
@@ -77,9 +54,11 @@ public class PokerHand {
 		r3 = isLastCardAnAce();
 		return (r1 && r2 && r3);
 	}
-
-
 	
+	public boolean isStraightFlush() {
+		return (areCardsSameSuit() && areCardsStraight() && !isLastCardAnAce());
+	}
+
 	public boolean isFourOfAKind() {
 		boolean r1, r2;
 
@@ -89,7 +68,7 @@ public class PokerHand {
 
 		return (r1 || r2);
 	}
-
+	
 	public boolean isFullHouse() {
 		boolean r1, r2;
 		// check for x.x.y.y.y || x.x.x.y.y
@@ -104,6 +83,21 @@ public class PokerHand {
 		return (r1 || r2);
 	}
 
+	public boolean isFlush() {
+		boolean r = false;
+		
+		if(isRoyalFlush() || isStraightFlush()) {
+			return r;
+		}
+		
+		r = areCardsSameSuit();
+		
+		return r;
+	}
+	
+	public boolean isStraight() {
+		return areCardsStraight() && !areCardsSameSuit();
+	}
 	
 	public boolean isThreeOfAKind() {
 		boolean r = false;
