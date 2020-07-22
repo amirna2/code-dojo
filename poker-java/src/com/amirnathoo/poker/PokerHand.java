@@ -21,20 +21,66 @@ public class PokerHand {
 		this.cards = cards;
 	}
 
-	public boolean isRoyalFlush() {
-		// is straight, flush and the last card is an ace.
-		boolean r1, r2, r3;
-		r1 = isFlush();
-		r2 = isStraight();
-		r3 = (cards[HAND_SIZE-1].getRank() == Card.A);
-		return (r1 && r2 && r3);
+	// Utility methods
+	private boolean areCardsSameSuit() {
+		boolean r = false;
+		r = cards[0].getSuit() == cards[1].getSuit() && cards[1].getSuit() == cards[2].getSuit()
+				&& cards[2].getSuit() == cards[3].getSuit() && cards[3].getSuit() == cards[4].getSuit();
+		return r;
+		
+	}
+		
+	private boolean areCardsStraight() {
+		boolean r = true;
+		for (int i = 0; i < HAND_SIZE - 1; i++) {
+			if (cards[i].getRank() != (cards[i + 1].getRank() - 1)) {
+				r = false;
+				break;
+			}
+		}
+		return r;
+	}
+	
+	private boolean isLastCardAnAce() {
+		// This assumes cards are sorted in ascending order
+		return (cards[HAND_SIZE-1].getRank() == Card.A);
+	}
+
+	
+	// Evaluator methods
+	
+	public boolean isFlush() {
+		boolean r = false;
+		
+		if(isRoyalFlush() || isStraightFlush()) {
+			return r;
+		}
+		
+		r = areCardsSameSuit();
+		
+		return r;
+	}
+
+	public boolean isStraight() {
+		return areCardsStraight() && !areCardsSameSuit();
 	}
 
 	public boolean isStraightFlush() {
-		return (isFlush() && isStraight());
+		return (areCardsSameSuit() && areCardsStraight() && !isLastCardAnAce());
+		
 	}
 
-	public boolean isFourOfaKind() {
+	public boolean isRoyalFlush() {
+		boolean r1, r2, r3;
+		r1 = areCardsSameSuit();
+		r2 = areCardsStraight();
+		r3 = isLastCardAnAce();
+		return (r1 && r2 && r3);
+	}
+
+
+	
+	public boolean isFourOfAKind() {
 		boolean r1, r2;
 
 		// check for x.x.x.x.y || y.x.x.x.x
@@ -58,29 +104,10 @@ public class PokerHand {
 		return (r1 || r2);
 	}
 
-	public boolean isFlush() {
-		boolean r;
-		r = cards[0].getSuit() == cards[1].getSuit() && cards[1].getSuit() == cards[2].getSuit()
-				&& cards[2].getSuit() == cards[3].getSuit() && cards[3].getSuit() == cards[4].getSuit();
-
-		return r;
-	}
-
-	public boolean isStraight() {
-		boolean r = true;
-		for (int i = 0; i < HAND_SIZE - 1; i++) {
-			if (cards[i].getRank() != (cards[i + 1].getRank() - 1)) {
-				r = false;
-				break;
-			}
-		}
-		return r;
-
-	}
-
+	
 	public boolean isThreeOfAKind() {
 		boolean r = false;
-		if(isFourOfaKind() || isFullHouse()) {
+		if(isFourOfAKind() || isFullHouse()) {
 			return r;
 		}
 		// x.x.x.y.z || y.x.x.x.z || y.z.x.x.x
@@ -94,7 +121,7 @@ public class PokerHand {
 
 	public boolean isTwoPairs() {
 		boolean r = false;
-		if(isFourOfaKind()) {
+		if(isFourOfAKind() || isFullHouse()) {
 			return r;
 		} 
 		
@@ -108,7 +135,7 @@ public class PokerHand {
 
 	public boolean isOnePair() {
 		boolean r = false;
-		if(isThreeOfAKind() || isFourOfaKind() || isFullHouse() || isTwoPairs())
+		if(isThreeOfAKind() || isFourOfAKind() || isFullHouse() || isTwoPairs())
 		{
 			return r;
 		}
@@ -125,7 +152,7 @@ public class PokerHand {
 		boolean r = false;
 
 		if (!isRoyalFlush() && !isFlush() && !isStraight() && !isFullHouse() && !isStraightFlush() && !isThreeOfAKind()
-				&& !isFourOfaKind() && !isTwoPairs() && !isOnePair()) {
+				&& !isFourOfAKind() && !isTwoPairs() && !isOnePair()) {
 			r = true;
 		}
 		return r;
