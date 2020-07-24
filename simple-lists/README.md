@@ -14,5 +14,7 @@ For this kata we’re going to code up three implementations of a list that has 
 3. Some other implementation of your choosing, except that it should use no references (pointers) to collect nodes together in the list.
 
 Obviously, we won’t be using predefined library classes as our list implementations…
-See http://codekata.com/kata/kata21-simple-lists/ for more details
-And https://en.wikipedia.org/wiki/Linked_list for more about Linked Lists
+
+See http://codekata.com/kata/kata21-simple-lists/ for more details about this kata.
+
+And https://en.wikipedia.org/wiki/Linked_list for more about Linked Lists.
