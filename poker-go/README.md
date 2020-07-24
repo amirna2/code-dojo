@@ -1,5 +1,5 @@
 # Poker Hand Evaluator - Go language implementation
-Evaluate a 5 cards poker hand using TDD approach.
+Evaluate a 5 cards poker hand.
 
 Cards are ranked `A`ce, `K`ing, `Q`ueen, `J`ack, 10...2
 Suits are `CLUB`, `SPADE`, `DIAMOND` and `HEART`
